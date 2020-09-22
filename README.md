@@ -1,1 +1,0 @@
-# openshift-operator-airlock-waf
