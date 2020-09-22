@@ -1,4 +1,8 @@
 @startuml
+/'
+Edit e.g. via http://www.plantuml.com/plantuml/uml/
+Learning resources e.g. https://crashedmind.github.io/PlantUMLHitchhikersGuide/
+'/
 start
 :Create session;
 note right
