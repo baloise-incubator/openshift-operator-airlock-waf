@@ -30,6 +30,8 @@ based on manufacturer know-how
 
 modularized
 
+in sync with manufacturer (API) changes
+
 | partially reliant on internal / binary resources
 
 | *Opportunities*
@@ -54,12 +56,24 @@ champion: build our own (lightweight) solution based on Quarkus and the Fabric8 
 | Strengths 
 | Weaknesses
 
-|
-|
+| potentially lightweight
+
+exactly what we need
+
+| offset to manufacturer (API) changes
+
+(new) use cases must be implemented and maintained by our own
 
 | *Opportunities*
 | *Threats*
 
-|
-|
+| exemplify new technology within small and well defined scope
+| new framework technology without TIP & supporter
+
+mitigation: *find supporter and file TIP*
+
+incompatible (API) changes by manufacturer
+
+mitigation: *make open-source and inform manufacturer about it*
+
 |===
