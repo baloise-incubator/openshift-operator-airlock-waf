@@ -21,9 +21,30 @@ public interface AirlockWAFRestAPI {
     Response createWAFSession();
 
     @POST
+    @Path("/session/terminate")
+    Response terminateWAFSessions(@CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie);
+
+    @POST
     @Path("/configuration/configurations/load-active")
     Response loadActiveConiguration(@CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie);
+    
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Path("/configuration/configurations/save")
+    Response saveConfiguration(@CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie);
 
+    @POST
+    @Consumes("application/json")
+    @Path("/configuration/configurations/activate")
+    Response activateConfiguration(@CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie);
+
+    @POST
+    @Consumes("application/json")
+    @Path("/configuration/mappings")
+    Response createMapping(
+        @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @BeanParam AirlockWAFMapping airlockWAFMapping);
 
 
 
