@@ -13,14 +13,21 @@ use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-
 | Strengths 
 | Weaknesses
 
-|
-|
+| based on Spring
+
+based on manufacturer know-how
+
+modularized
+
+| partially reliant on internal / binary resources
 
 | *Opportunities*
 | *Threats*
 
-|
-|
+| (distributed) maintenance (e.g. by manufacturer) in future
+| upstream project direction no longer aligned with internal requirements
+
+mitigation: *fork and maintain on our own*
 |===
 
 == approach 2 
