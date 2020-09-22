@@ -21,6 +21,27 @@ public class AirlockWAFRestService {
         Cookie cookie = response.getCookies().get(AirlockWAFRestAPI.WAF_SESSION_COOKIE_NAME);
         System.out.println(cookie.getName() + " : " + cookie.getValue());
         response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
-        System.out.println(response.getStatus());
+        System.out.println("loadeConfig: " + response.getStatus());
+        response = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAfMappingBean());
+        System.out.println("createMapping: " + response.getStatus());
+        response = airlockWAFRestAPI.saveConfiguration(cookie.getValue());
+        System.out.println("saveConfig " + response.getStatus());       
+        response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
+        System.out.println("terminateSession " + response.getStatus());
+    }
+
+    private AirlockWAFMapping buildAirlockWAfMappingBean() {
+        EntryPath entryPath = new EntryPath();
+        entryPath.setValue("/");
+        Attributes attributes = new Attributes();
+        attributes.setName("CodeCampMapFromQuarkus");
+        attributes.setEntryPath(entryPath);
+        attributes.setBackendPath("/");
+        Data data = new Data();
+        data.setType("mapping");
+        data.setAttributes(attributes);
+        AirlockWAFMapping airlockWAFMapping = new AirlockWAFMapping();
+        airlockWAFMapping.setData(data);
+        return airlockWAFMapping;
     }
 }
