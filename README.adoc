@@ -6,7 +6,7 @@
 
 use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-openshift-integration
 
-=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] analysis
+=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] ergon
 
 [cols="1,1", options="header"] 
 |===
@@ -29,7 +29,7 @@ use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-
 
 champion: build our own (lightweight) solution based on Quarkus and the Fabric8 Java Kubernetes client API.
 
-=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] analysis
+=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] baloise
 
 [cols="1,1", options="header"] 
 |===
