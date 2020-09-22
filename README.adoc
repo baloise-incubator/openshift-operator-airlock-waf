@@ -9,7 +9,30 @@ image::http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/baloise
 We've discussed two ideas
 
 - defining a https://docs.okd.io/3.11/admin_guide/custom_resource_definitions.html[CustomResourceDefinitions (CRD)] and listend for change events here
-- listening for e.g. route - see https://docs.okd.io/3.11/architecture/networking/routes.html[architecture] and https://docs.okd.io/3.11/rest_api/route_openshift_io/route-route-openshift-io-v1.html[API] - change events and annotation the e.g. route with required information to create / update / maintain a WAF mapping
+- listening for e.g. route - see https://docs.okd.io/3.11/architecture/networking/routes.html[architecture] and https://docs.okd.io/3.11/rest_api/route_openshift_io/route-route-openshift-io-v1.html[API] - change events and https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/[annotation] the e.g. route with required information to create / update / maintain a WAF mapping
+
+=== Required WAF Data
+
+Mapping:
+
+- Name
+- (entryPath)
+- (backendPath)
+
+BackendGroup:
+
+- Name
+
+Backend (x):
+
+- Name
+- Protocol
+- Port
+
+VHost
+
+- Name
+
 
 == approach 1
 
