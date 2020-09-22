@@ -1,5 +1,9 @@
 package com.baloise.waf.rest.api.client;
 
+import com.baloise.waf.rest.api.client.beans.AirlockWAFMapping;
+import com.baloise.waf.rest.api.client.beans.Attributes;
+import com.baloise.waf.rest.api.client.beans.Data;
+import com.baloise.waf.rest.api.client.beans.EntryPath;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -32,16 +36,16 @@ public class AirlockWAFRestService {
 
     private AirlockWAFMapping buildAirlockWAfMappingBean() {
         EntryPath entryPath = new EntryPath();
-        entryPath.setValue("/");
+        entryPath.value = "/";
         Attributes attributes = new Attributes();
-        attributes.setName("CodeCampMapFromQuarkus");
-        attributes.setEntryPath(entryPath);
-        attributes.setBackendPath("/");
+        attributes.name = "CodeCampMapFromQuarkus";
+        attributes.entryPath = entryPath;
+        attributes.backendPath = "/";
         Data data = new Data();
-        data.setType("mapping");
-        data.setAttributes(attributes);
+        data.type = "mapping";
+        data.attributes = attributes;
         AirlockWAFMapping airlockWAFMapping = new AirlockWAFMapping();
-        airlockWAFMapping.setData(data);
+        airlockWAFMapping.data =  data;
         return airlockWAFMapping;
     }
 }

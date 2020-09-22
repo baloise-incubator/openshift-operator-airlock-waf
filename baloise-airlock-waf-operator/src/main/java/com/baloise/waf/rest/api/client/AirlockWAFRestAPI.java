@@ -1,12 +1,10 @@
 package com.baloise.waf.rest.api.client;
 
+import com.baloise.waf.rest.api.client.beans.AirlockWAFMapping;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import org.jboss.resteasy.annotations.jaxrs.HeaderParam;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 
@@ -44,7 +42,7 @@ public interface AirlockWAFRestAPI {
     @Path("/configuration/mappings")
     Response createMapping(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        @BeanParam AirlockWAFMapping airlockWAFMapping);
+        AirlockWAFMapping airlockWAFMapping);
 
 
 
