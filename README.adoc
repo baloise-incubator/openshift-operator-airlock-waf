@@ -6,7 +6,22 @@
 
 use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-openshift-integration
 
-=== SWOT analysis
+=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] analysis
+
+[cols="1,1", options="header"] 
+|===
+| Strengths 
+| Weaknesses
+
+|
+|
+
+| *Opportunities*
+| *Threats*
+
+|
+|
+|===
 
 == approach 2 
 
@@ -14,4 +29,19 @@ use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-
 
 champion: build our own (lightweight) solution based on Quarkus and the Fabric8 Java Kubernetes client API.
 
-=== SWOT analysis
+=== https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] analysis
+
+[cols="1,1", options="header"] 
+|===
+| Strengths 
+| Weaknesses
+
+|
+|
+
+| *Opportunities*
+| *Threats*
+
+|
+|
+|===
