@@ -4,14 +4,18 @@
 
 image::http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/baloise-incubator/openshift-operator-airlock-waf/master/workflow.puml[workflow]
 
-== required metadata
+== metadata
+
+=== ideas
 
 We've discussed two ideas
 
 - defining a https://docs.okd.io/3.11/admin_guide/custom_resource_definitions.html[CustomResourceDefinitions (CRD)] and listend for change events here
 - listening for e.g. route - see https://docs.okd.io/3.11/architecture/networking/routes.html[architecture] and https://docs.okd.io/3.11/rest_api/route_openshift_io/route-route-openshift-io-v1.html[API] - change events and https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/[annotation] the e.g. route with required information to create / update / maintain a WAF mapping
 
-=== Required WAF Data
+For now we go with the second approach.
+
+=== required WAF information
 
 Mapping:
 
@@ -33,6 +37,20 @@ VHost
 
 - Name
 
+=== WAF -> OpenShift attribute & annotation mapping
+
+[source,yaml]
+----
+metadata: {
+  ergon.ch/waf-mapping: { # <1>
+    key1 : "value1", # <2>
+    key2 : "value2" # <3>
+  }
+}
+----
+<1> annotation itself
+<2> property 1
+<3> property 2
 
 == approach 1
 
