@@ -1,17 +1,46 @@
 @startuml
-:foo1;
--> You can put text on arrows;
-if (test) then
-  -[#blue]->
-  :foo2;
-  -[#green,dashed]-> The text can
-  also be on several lines
-  and **very** long...;
-  :foo3;
+start
+:Create session;
+note right
+  WAF API key
+end note
+:Load active configuration;
+note right
+  Session Cookie
+end note
+if (create|update) then
+  -[#green]->
+  :Create new mapping;
+  note left
+    Session Cookie
+    Mapping Data
+  end note
+  if (backendAlreadyExists) then
+    :Create new backend;
+  else
+    :Use existing backend;
+  endif
+  :Map backend;
+  :Map vHost;
+  -[#blue,dashed]-> sequence of
+  WAF REST API calls;
+  :Activate config;
 else
   -[#black,dotted]->
-  :foo4;
+  :Update existing mapping;
+  if (backendAlreadyExists) then
+    :Create new backend;
+  else
+    :Modify existing backend;
+  endif
+  -[#blue,dashed]-> sequence of
+  WAF REST API calls;
+  :Save config;
+  note right
+    WAF Admin
+    manual activate config
+  end note
 endif
--[#gray,bold]->
-:foo5;
+:Terminate session;
+stop
 @enduml
