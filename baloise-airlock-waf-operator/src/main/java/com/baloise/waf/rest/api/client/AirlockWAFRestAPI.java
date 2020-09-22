@@ -25,4 +25,6 @@ public interface AirlockWAFRestAPI {
     Response loadActiveConiguration(@CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie);
 
 
+
+
 }
