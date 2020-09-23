@@ -62,7 +62,7 @@ example
       baloise.com/waf-mapping-entry-path: "/"
       baloise.com/waf-mapping-backend-path: "/"
       baloise.com/waf-backendgroup-name: "echoserver-group"
-      baloise.com/waf-backend-name: "echoserver-test.app-test.os2.balgroupit.com"
+      baloise.com/waf-backend-name: "echoserver-test.demodomain.com"
       baloise.com/waf-backend-protocol: "https"
       baloise.com/waf-backend-port: "443"
       baloise.com/waf-vhost-name: "CodeCamp WAF1"
