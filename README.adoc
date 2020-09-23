@@ -73,7 +73,7 @@ modularized
 
 in sync with manufacturer (API) changes
 
-| partially reliant on internal / binary resources
+| partially reliant on https://github.com/ergon/airlock-waf-kubernetes-openshift-integration/issues/8[internal / binary resources]
 
 | *Opportunities*
 | *Threats*
@@ -97,7 +97,7 @@ champion: build our own (lightweight) solution based on Quarkus and the Fabric8 
 | Strengths 
 | Weaknesses
 
-| potentially lightweight
+| potentially more lightweight
 
 exactly what we need
 
