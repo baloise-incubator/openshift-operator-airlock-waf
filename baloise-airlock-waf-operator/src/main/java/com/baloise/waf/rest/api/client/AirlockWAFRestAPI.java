@@ -44,6 +44,4 @@ public interface AirlockWAFRestAPI {
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         AirlockWAFMapping airlockWAFMapping);
 
-
-
 }
