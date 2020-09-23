@@ -66,7 +66,7 @@ example
       baloise.com/waf-backend-protocol: "https"
       baloise.com/waf-backend-port: "443"
       baloise.com/waf-vhost-name: "CodeCamp WAF1"
-      
+----      
 == approach 1
 
 === idea
