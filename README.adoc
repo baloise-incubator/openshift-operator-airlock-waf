@@ -52,11 +52,26 @@ metadata: {
 <2> property 1
 <3> property 2
 
+example
+[source,yaml]
+----
+  metadata:
+    annotations:
+      baloise.com/waf-operator-enabled: "true"
+      baloise.com/waf-mapping-name: "echoserver"
+      baloise.com/waf-mapping-entry-path: "/"
+      baloise.com/waf-mapping-backend-path: "/"
+      baloise.com/waf-backendgroup-name: "echoserver-group"
+      baloise.com/waf-backend-name: "echoserver-test.demodomain.com"
+      baloise.com/waf-backend-protocol: "https"
+      baloise.com/waf-backend-port: "443"
+      baloise.com/waf-vhost-name: "CodeCamp WAF1"
+----      
 == approach 1
 
 === idea
 
-use and contribute: https://github.com/baloise-incubator/airlock-waf-kubernetes-openshift-integration
+use and contribute: https://github.com/ergon/airlock-waf-kubernetes-openshift-integration
 
 === https://en.wikipedia.org/wiki/SWOT_analysis#Overview[SWOT] ergon
 
@@ -73,7 +88,7 @@ modularized
 
 in sync with manufacturer (API) changes
 
-| partially reliant on internal / binary resources
+| partially reliant on https://github.com/ergon/airlock-waf-kubernetes-openshift-integration/issues/8[internal / binary resources]
 
 | *Opportunities*
 | *Threats*
@@ -81,7 +96,7 @@ in sync with manufacturer (API) changes
 | (distributed) maintenance (e.g. by manufacturer) in future
 | upstream project direction no longer aligned with internal requirements
 
-mitigation: *fork and maintain on our own*
+mitigation: *https://github.com/baloise-incubator/airlock-waf-kubernetes-openshift-integration[fork] and maintain on our own*
 |===
 
 == approach 2 
@@ -97,7 +112,7 @@ champion: build our own (lightweight) solution based on Quarkus and the Fabric8 
 | Strengths 
 | Weaknesses
 
-| potentially lightweight
+| potentially more lightweight
 
 exactly what we need
 
