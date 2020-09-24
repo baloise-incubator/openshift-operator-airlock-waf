@@ -1,11 +1,12 @@
 package com.baloise.waf.rest.api.client;
 
-import com.baloise.waf.rest.api.client.beans.AirlockWAFBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFMapping;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
-import com.baloise.waf.rest.api.client.beans.mapping.WAFMapping;
+import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleBackend;
+import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleMapping;
+import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
+import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
 
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -51,17 +52,17 @@ public interface AirlockWAFRestAPI {
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/mappings")
-    WAFMapping createMapping(
+    AirlockWAFMapping createMapping(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        AirlockWAFMapping airlockWAFMapping);
+        AirlockWAFSimpleMapping airlockWAFMapping);
 
     @POST
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/back-end-groups")
-    Response createBackend(
+    AirlockWAFBackend createBackend(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        AirlockWAFBackend airlockWAFBackend);
+        AirlockWAFSimpleBackend airlockWAFBackend);
 
     @PATCH
     @Consumes("application/json")
@@ -71,6 +72,7 @@ public interface AirlockWAFRestAPI {
     Response connectMappingBackend(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         @PathParam("mappingid") String mappingId,
+        @PathParam("backendid") String backendID,
         AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend);
     
     @PATCH
