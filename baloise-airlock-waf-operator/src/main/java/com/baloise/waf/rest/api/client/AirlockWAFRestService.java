@@ -1,12 +1,9 @@
 package com.baloise.waf.rest.api.client;
 
-import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
+import com.baloise.waf.rest.api.client.beans.*;
 import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
 import com.baloise.waf.rest.api.client.beans.backend.BackendHost;
 import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
-import com.baloise.waf.rest.api.client.beans.ConnectData;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.ArrayList;
@@ -26,15 +23,15 @@ public class AirlockWAFRestService {
     @RestClient
     AirlockWAFRestAPI airlockWAFRestAPI;
 
-    public void createMappig() {
+    public void createMappig(MappingDTO mappingDTO) {
         Response response = airlockWAFRestAPI.createWAFSession();
         Cookie cookie = response.getCookies().get(AirlockWAFRestAPI.WAF_SESSION_COOKIE_NAME);
         System.out.println(cookie.getName() + " : " + cookie.getValue());
         response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
         System.out.println("loadeConfig: " + response.getStatus());
-        AirlockWAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean());
+        AirlockWAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean(mappingDTO));
         System.out.println("Mapping ID: " + wafMapping.data.id);
-        AirlockWAFBackend wafBackend = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean());
+        AirlockWAFBackend wafBackend = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean(mappingDTO));
         System.out.println("Backend ID: " + wafBackend.data.id);
         response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingBackend(wafBackend.data.id));
         System.out.println("connectMappingBackend: " + response.getStatus());
@@ -46,13 +43,13 @@ public class AirlockWAFRestService {
         System.out.println("terminateSession " + response.getStatus());
     }
 
-    private AirlockWAFMapping buildAirlockWAFMappingBean() {
+    private AirlockWAFMapping buildAirlockWAFMappingBean(MappingDTO mappingDTO) {
         com.baloise.waf.rest.api.client.beans.mapping.EntryPath entryPath = new com.baloise.waf.rest.api.client.beans.mapping.EntryPath();
-        entryPath.value = "/";
+        entryPath.value = mappingDTO.getEntryPath();
         com.baloise.waf.rest.api.client.beans.mapping.Attributes mapAttributes = new com.baloise.waf.rest.api.client.beans.mapping.Attributes();
-        mapAttributes.name = "CodeCampMapFromQuarkus";
+        mapAttributes.name = mappingDTO.getMappingName();
         mapAttributes.entryPath = entryPath;
-        mapAttributes.backendPath = "/";
+        mapAttributes.backendPath = mappingDTO.getBackendPath();
         com.baloise.waf.rest.api.client.beans.mapping.Data mapData = new com.baloise.waf.rest.api.client.beans.mapping.Data();
         mapData.type = "mapping";
         mapData.attributes = mapAttributes;
@@ -61,10 +58,10 @@ public class AirlockWAFRestService {
         return airlockWAFMapping;
     }
 
-    private AirlockWAFBackend buildAirlockWAFBackendBean() {
+    private AirlockWAFBackend buildAirlockWAFBackendBean(MappingDTO mappingDTO) {
         com.baloise.waf.rest.api.client.beans.backend.Attributes backAttributes = new com.baloise.waf.rest.api.client.beans.backend.Attributes();
-        backAttributes.name = "CodeCampBackFromQuarkus";
-        backAttributes.backendHosts = buildBackendHosts();
+        backAttributes.name = mappingDTO.getBackendGroupName();
+        backAttributes.backendHosts = buildBackendHosts(mappingDTO);
         com.baloise.waf.rest.api.client.beans.backend.Data backData  = new com.baloise.waf.rest.api.client.beans.backend.Data ();
         backData.type = "back-end-group";
         backData.attributes = backAttributes;
@@ -73,13 +70,13 @@ public class AirlockWAFRestService {
         return airlockWAFBackend;
     }
 
-    private List<BackendHost> buildBackendHosts() {
+    private List<BackendHost> buildBackendHosts(MappingDTO mappingDTO) {
 
         List<BackendHost> backendHosts = new ArrayList<>();
         BackendHost backendHost = new BackendHost();
-        backendHost.hostName = "example.com";
-        backendHost.protocol = "HTTP";
-        backendHost.port = 80;
+        backendHost.hostName = mappingDTO.getBackendHostName().toLowerCase();
+        backendHost.protocol = mappingDTO.getBackendProtocol().toUpperCase();
+        backendHost.port = mappingDTO.getBackendPort();
         backendHosts.add(backendHost);
         return backendHosts;
     
