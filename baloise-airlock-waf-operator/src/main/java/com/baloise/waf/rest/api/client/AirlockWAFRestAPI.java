@@ -3,8 +3,6 @@ package com.baloise.waf.rest.api.client;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleBackend;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleMapping;
 import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
 import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
@@ -53,7 +51,7 @@ public interface AirlockWAFRestAPI {
     @Path("/configuration/mappings")
     AirlockWAFMapping createMapping(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        AirlockWAFSimpleMapping airlockWAFMapping);
+        AirlockWAFMapping airlockWAFMapping);
 
     @POST
     @Consumes("application/json")
@@ -61,7 +59,7 @@ public interface AirlockWAFRestAPI {
     @Path("/configuration/back-end-groups")
     AirlockWAFBackend createBackend(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        AirlockWAFSimpleBackend airlockWAFBackend);
+        AirlockWAFBackend airlockWAFBackend);
 
     @PATCH
     @Consumes("application/json")
