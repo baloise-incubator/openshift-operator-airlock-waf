@@ -1,7 +1,7 @@
 package com.baloise.waf.rest.api.client;
 
 import com.baloise.waf.rest.api.client.beans.*;
-import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
+import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackendGroup;
 import com.baloise.waf.rest.api.client.beans.backend.BackendHost;
 import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -31,15 +31,47 @@ public class AirlockWAFRestService {
         System.out.println("loadeConfig: " + response.getStatus());
         AirlockWAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean(mappingDTO));
         System.out.println("Mapping ID: " + wafMapping.data.id);
-        AirlockWAFBackend wafBackend = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean(mappingDTO));
+        AirlockWAFBackendGroup wafBackend = airlockWAFRestAPI.createBackendGroup(cookie.getValue(), buildAirlockWAFBackendGroupBean(mappingDTO));
         System.out.println("Backend ID: " + wafBackend.data.id);
-        response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingBackend(wafBackend.data.id));
+        response = airlockWAFRestAPI.connectMappingBackendGroup(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingBackendgroup(wafBackend.data.id));
         System.out.println("connectMappingBackend: " + response.getStatus());
         response = airlockWAFRestAPI.connectMappingVhost(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingVhost());
         System.out.println("connectMappingVhost: " + response.getStatus());
         response = airlockWAFRestAPI.saveConfiguration(cookie.getValue(), buildAirlockWAFSaveBean());
- //       System.out.println("saveConfig " + response.getStatus());       
- //       response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
+        System.out.println("saveConfig " + response.getStatus());       
+        response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
+        System.out.println("terminateSession " + response.getStatus());
+    }
+
+    public void updateMappig(MappingDTO mappingDTO) {
+        Response response = airlockWAFRestAPI.createWAFSession();
+        Cookie cookie = response.getCookies().get(AirlockWAFRestAPI.WAF_SESSION_COOKIE_NAME);
+        System.out.println(cookie.getName() + " : " + cookie.getValue());
+        response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
+        System.out.println("loadeConfig: " + response.getStatus());
+        response = airlockWAFRestAPI.updateMapping(cookie.getValue(), "4", buildAirlockWAFMappingBean(mappingDTO));
+        System.out.println("Maping Update " + response.getStatus());
+        response = airlockWAFRestAPI.updateBackendGroup(cookie.getValue(), "5", buildAirlockWAFBackendGroupBean(mappingDTO));
+        System.out.println("Backend Update " + response.getStatus());
+        response = airlockWAFRestAPI.saveConfiguration(cookie.getValue(), buildAirlockWAFSaveBean());
+        System.out.println("saveConfig " + response.getStatus());       
+        response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
+        System.out.println("terminateSession " + response.getStatus());
+    }
+
+    public void deleteMappig() {
+        Response response = airlockWAFRestAPI.createWAFSession();
+        Cookie cookie = response.getCookies().get(AirlockWAFRestAPI.WAF_SESSION_COOKIE_NAME);
+        System.out.println(cookie.getName() + " : " + cookie.getValue());
+        response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
+        System.out.println("loadeConfig: " + response.getStatus());
+        response = airlockWAFRestAPI.deleteMapping(cookie.getValue(), "4");
+        System.out.println("Maping Delete " + response.getStatus());
+        response = airlockWAFRestAPI.deleteBackendGroup(cookie.getValue(), "5");
+        System.out.println("Update Delete " + response.getStatus());
+        response = airlockWAFRestAPI.saveConfiguration(cookie.getValue(), buildAirlockWAFSaveBean());
+        System.out.println("saveConfig " + response.getStatus());       
+        response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
         System.out.println("terminateSession " + response.getStatus());
     }
 
@@ -58,14 +90,14 @@ public class AirlockWAFRestService {
         return airlockWAFMapping;
     }
 
-    private AirlockWAFBackend buildAirlockWAFBackendBean(MappingDTO mappingDTO) {
+    private AirlockWAFBackendGroup buildAirlockWAFBackendGroupBean(MappingDTO mappingDTO) {
         com.baloise.waf.rest.api.client.beans.backend.Attributes backAttributes = new com.baloise.waf.rest.api.client.beans.backend.Attributes();
         backAttributes.name = mappingDTO.getBackendGroupName();
         backAttributes.backendHosts = buildBackendHosts(mappingDTO);
         com.baloise.waf.rest.api.client.beans.backend.Data backData  = new com.baloise.waf.rest.api.client.beans.backend.Data ();
         backData.type = "back-end-group";
         backData.attributes = backAttributes;
-        AirlockWAFBackend airlockWAFBackend = new AirlockWAFBackend();
+        AirlockWAFBackendGroup airlockWAFBackend = new AirlockWAFBackendGroup();
         airlockWAFBackend.data  =  backData ;
         return airlockWAFBackend;
     }
@@ -84,15 +116,15 @@ public class AirlockWAFRestService {
 
     private AirlockWAFSave buildAirlockWAFSaveBean() {
         AirlockWAFSave airlockWAFSave = new AirlockWAFSave();
-        airlockWAFSave.comment = "CodeCamp Save From Quarkus";
+        airlockWAFSave.comment = "CodeCamp Save from Stephan";
         return airlockWAFSave;
     }
 
-    private AirlockWAFConnectMappingBackend buildAirlockWAFConnectMappingBackend(String backendID) {
+    private AirlockWAFConnectMappingBackendGroup buildAirlockWAFConnectMappingBackendgroup(String backendID) {
         ConnectData connectMapBackData = new ConnectData();
         connectMapBackData.type = "back-end-group";
         connectMapBackData.id = backendID;
-        AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend = new AirlockWAFConnectMappingBackend();
+        AirlockWAFConnectMappingBackendGroup airlockWAFConnectMappingBackend = new AirlockWAFConnectMappingBackendGroup();
         airlockWAFConnectMappingBackend.data = connectMapBackData;
         return airlockWAFConnectMappingBackend;
     }

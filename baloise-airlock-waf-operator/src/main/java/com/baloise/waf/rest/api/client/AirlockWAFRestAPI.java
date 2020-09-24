@@ -1,9 +1,9 @@
 package com.baloise.waf.rest.api.client;
 
-import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
+import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackendGroup;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
-import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
+import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackendGroup;
 import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -53,29 +53,57 @@ public interface AirlockWAFRestAPI {
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         AirlockWAFMapping airlockWAFMapping);
 
+    @PATCH
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/configuration/mappings/{mappingid}")
+    Response updateMapping(
+        @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("mappingid") String mappingId,
+        AirlockWAFMapping airlockWAFMapping);
+    
+    @DELETE
+    @Path("/configuration/mappings/{mappingid}")
+    Response deleteMapping(
+        @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("mappingid") String mappingId);
+
     @POST
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/back-end-groups")
-    AirlockWAFBackend createBackend(
+    AirlockWAFBackendGroup createBackendGroup(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
-        AirlockWAFBackend airlockWAFBackend);
+        AirlockWAFBackendGroup airlockWAFBackendGroup);
+
+    @PATCH
+    @Consumes("application/json")
+    @Produces("application/json")
+    @Path("/configuration/back-end-groups/{backendGroupid}")
+    Response updateBackendGroup(
+        @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("backendGroupid") String backendGroupId,
+        AirlockWAFBackendGroup airlockWAFBackendGroup);
+    
+    @DELETE
+    @Path("/configuration/back-end-groups/{backendGroupid}")
+    Response deleteBackendGroup(
+        @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("backendGroupid") String backendGroupId);
 
     @PATCH
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/mappings/{mappingid}/relationships/back-end-group")
-    //ToDo replace hardcoded mapping id with PathParam
-    Response connectMappingBackend(
+    Response connectMappingBackendGroup(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         @PathParam("mappingid") String mappingId,
-        AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend);
+        AirlockWAFConnectMappingBackendGroup airlockWAFConnectMappingBackend);
     
     @PATCH
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/mappings/{mappingid}/relationships/virtual-hosts")
-    //ToDo replace hardcoded mapping id with PathParam
     Response connectMappingVhost(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         @PathParam("mappingid") String mappingId,
