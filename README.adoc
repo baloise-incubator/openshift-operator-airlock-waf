@@ -57,6 +57,8 @@ For now we go with the second approach.
       baloise.com/waf-vhost-name: "CodeCamp WAF1"
 ----
 
+=== https://docs.airlock.com/gateway/7.4/rest-api/config-rest-api.html[-> WAF Configuration REST API]
+
 == approach 1
 
 === idea
