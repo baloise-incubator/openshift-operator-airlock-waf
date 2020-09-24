@@ -1,14 +1,78 @@
 # baloise-airlock-waf-operator project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+An OpenShift Operator watching for Lifecycle Events of OpenShift Routes and 
+create,update or delete waf mappings based on the events.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Uses
+* https://fabric8.io/guide/javaLibraries.html
+* https://github.com/fabric8io/kubernetes-client
+* https://github.com/fabric8io/kubernetes-client/blob/master/doc/CHEATSHEET.md
+* http://www.bouncycastle.org/java.html
+
+## Todo
+At the moment we need a manuall added dependency to fabric8 openshift-client.
+This is needed as long as quarkus not have a extension for the openshift-client.
+see https://github.com/quarkusio/quarkus/issues/3200
+-> Result - we could not build a native version of the application yet
+
+## Docker Image
+### Base Docker Image
+To import the RedHat Base Image used by baloise-airlock-waf-operator into Baloise Quay manually use the following Steps:
+```
+$ docker pull registry.access.redhat.com/ubi8/ubi-minimal:8.2
+$ docker tag registry.access.redhat.com/ubi8/ubi-minimal:8.2 quay.balgroupit.com/kafka/ubi-minimal:8.2
+$ docker login quay.balgroupit.com -u b0xxxxxx
+$ docker push quay.balgroupit.com/kafka/ubi-minimal:8.2
+```
+### Local Build Docker Image
+If you add some COPY commands in Dockerfile don't forget to update `.dockerignore` !!
+```
+./mvnw clean package
+docker build -f src/main/docker/Dockerfile.jvm -t quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm .  
+```
+### Local run Docker Image
+If you are using the fabric8 KubernetesClient from inside a Pod, it will load ~/.kube/config from the ServiceAccount volume mounted inside the Pod.
+To be able to access the readiness and liveness probes urls from your docker host add -p 8080:8080
+To local run the Docker Container use the docker command below. 
+
+```
+docker run --rm -ti -v c:/<local-path-to>/config:/.kube/config -p8080:8080 quay.balgroupit.com/quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm
+```
+
+for example...
+```
+docker run --rm -ti -v c:/Users/B041305/.kube/config:/.kube/config -p8080:8080 quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm
+```
+ 
+The .kube/config file must be mounted manually in this case. 
+The local config file should contain the content below. 
+The ServiceAccount Token could be found in OpenShift Project kafa-self-service-config-prod in Ressources > Secrets 
+see. https://developers.redhat.com/blog/2020/05/20/getting-started-with-the-fabric8-kubernetes-java-client/  
 
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
 ```
+./mvnw compile quarkus:dev
 ./mvnw -Dquarkus.http.port=8081 compile quarkus:dev
+```
+
+# Test locally outside docker Container
+If you like to test the watcher to a remote Openshift you can provide a `KubernetesClientProducer` like this
+```java
+@ApplicationScoped
+public class KubernetesClientProducer {
+
+  @Produces
+  public KubernetesClient kubernetesClient() {
+    Config config = new ConfigBuilder()
+        .withMasterUrl("https://console.os2.balgroupit.com:443")
+        .withOauthToken("<service-account-oauth-token")
+        .withNamespace("kafka-test")
+        .build();
+    return new DefaultKubernetesClient(config);
+  }
+}
 ```
 
 ## Packaging and running the application
