@@ -7,7 +7,6 @@ import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleMapping;
 import com.baloise.waf.rest.api.client.beans.backend.AirlockWAFBackend;
 import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
-
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -72,7 +71,6 @@ public interface AirlockWAFRestAPI {
     Response connectMappingBackend(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         @PathParam("mappingid") String mappingId,
-        @PathParam("backendid") String backendID,
         AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend);
     
     @PATCH

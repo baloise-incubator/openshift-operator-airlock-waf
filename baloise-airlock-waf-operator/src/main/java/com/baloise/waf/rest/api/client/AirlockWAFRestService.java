@@ -43,7 +43,7 @@ public class AirlockWAFRestService {
         System.out.println("Mapping ID: " + wafMapping.data.id);
         AirlockWAFBackend wafBackend = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean());
         System.out.println("Backend ID: " + wafBackend.data.id);
-        response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), wafMapping.data.id, wafBackend.data.id, buildAirlockWAFConnectMappingBackend());
+        response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingBackend(wafBackend.data.id));
         System.out.println("connectMappingBackend: " + response.getStatus());
         response = airlockWAFRestAPI.connectMappingVhost(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingVhost());
         System.out.println("connectMappingVhost: " + response.getStatus());
@@ -98,10 +98,10 @@ public class AirlockWAFRestService {
         return airlockWAFSave;
     }
 
-    private AirlockWAFConnectMappingBackend buildAirlockWAFConnectMappingBackend() {
+    private AirlockWAFConnectMappingBackend buildAirlockWAFConnectMappingBackend(String backendID) {
         ConnectData connectMapBackData = new ConnectData();
         connectMapBackData.type = "back-end-group";
-        connectMapBackData.id = "5";
+        connectMapBackData.id = backendID;
         AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend = new AirlockWAFConnectMappingBackend();
         airlockWAFConnectMappingBackend.data = connectMapBackData;
         return airlockWAFConnectMappingBackend;
