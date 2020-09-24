@@ -1,14 +1,14 @@
 package com.baloise.waf.rest.api.client;
 
-import com.baloise.waf.rest.api.client.beans.AirlockWAFBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
-import com.baloise.waf.rest.api.client.beans.AirlockWAFMapping;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
+import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleBackend;
+import com.baloise.waf.rest.api.client.beans.AirlockWAFSimpleMapping;
 import com.baloise.waf.rest.api.client.beans.MapAttributes;
 import com.baloise.waf.rest.api.client.beans.BackAttributes;
 import com.baloise.waf.rest.api.client.beans.MapData;
-import com.baloise.waf.rest.api.client.beans.mapping.WAFMapping;
+import com.baloise.waf.rest.api.client.beans.mapping.AirlockWAFMapping;
 import com.baloise.waf.rest.api.client.beans.BackData;
 import com.baloise.waf.rest.api.client.beans.BackendHost;
 import com.baloise.waf.rest.api.client.beans.ConnectData;
@@ -38,7 +38,7 @@ public class AirlockWAFRestService {
         System.out.println(cookie.getName() + " : " + cookie.getValue());
         response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
         System.out.println("loadeConfig: " + response.getStatus());
-        WAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean());
+        AirlockWAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean());
         System.out.println("Mapping ID: " + wafMapping.data.id);
         response = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean());
         System.out.println("createBackend: " + response.getStatus());
@@ -52,7 +52,7 @@ public class AirlockWAFRestService {
         System.out.println("terminateSession " + response.getStatus());
     }
 
-    private AirlockWAFMapping buildAirlockWAFMappingBean() {
+    private AirlockWAFSimpleMapping buildAirlockWAFMappingBean() {
         EntryPath entryPath = new EntryPath();
         entryPath.value = "/";
         MapAttributes mapAttributes = new MapAttributes();
@@ -62,19 +62,19 @@ public class AirlockWAFRestService {
         MapData mapData = new MapData();
         mapData.type = "mapping";
         mapData.attributes = mapAttributes;
-        AirlockWAFMapping airlockWAFMapping = new AirlockWAFMapping();
+        AirlockWAFSimpleMapping airlockWAFMapping = new AirlockWAFSimpleMapping();
         airlockWAFMapping.data = mapData;
         return airlockWAFMapping;
     }
 
-    private AirlockWAFBackend buildAirlockWAFBackendBean() {
+    private AirlockWAFSimpleBackend buildAirlockWAFBackendBean() {
         BackAttributes backAttributes = new BackAttributes();
         backAttributes.name = "CodeCampBackFromQuarkus";
         backAttributes.backendHosts = buildBackendHosts();
         BackData backData  = new BackData ();
         backData.type = "back-end-group";
         backData.attributes = backAttributes;
-        AirlockWAFBackend airlockWAFBackend = new AirlockWAFBackend();
+        AirlockWAFSimpleBackend airlockWAFBackend = new AirlockWAFSimpleBackend();
         airlockWAFBackend.data  =  backData ;
         return airlockWAFBackend;
     }
