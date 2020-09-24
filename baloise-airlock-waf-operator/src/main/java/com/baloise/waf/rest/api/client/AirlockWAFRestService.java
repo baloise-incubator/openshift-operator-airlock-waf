@@ -8,6 +8,7 @@ import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
 import com.baloise.waf.rest.api.client.beans.MapAttributes;
 import com.baloise.waf.rest.api.client.beans.BackAttributes;
 import com.baloise.waf.rest.api.client.beans.MapData;
+import com.baloise.waf.rest.api.client.beans.mapping.WAFMapping;
 import com.baloise.waf.rest.api.client.beans.BackData;
 import com.baloise.waf.rest.api.client.beans.BackendHost;
 import com.baloise.waf.rest.api.client.beans.ConnectData;
@@ -37,17 +38,17 @@ public class AirlockWAFRestService {
         System.out.println(cookie.getName() + " : " + cookie.getValue());
         response = airlockWAFRestAPI.loadActiveConiguration(cookie.getValue());
         System.out.println("loadeConfig: " + response.getStatus());
-        response = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean());
-        System.out.println("createMapping: " + response.getStatus());
+        WAFMapping wafMapping = airlockWAFRestAPI.createMapping(cookie.getValue(), buildAirlockWAFMappingBean());
+        System.out.println("Mapping ID: " + wafMapping.data.id);
         response = airlockWAFRestAPI.createBackend(cookie.getValue(), buildAirlockWAFBackendBean());
         System.out.println("createBackend: " + response.getStatus());
-        response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), buildAirlockWAFConnectMappingBackend());
+        response = airlockWAFRestAPI.connectMappingBackend(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingBackend());
         System.out.println("connectMappingBackend: " + response.getStatus());
-        response = airlockWAFRestAPI.connectMappingVhost(cookie.getValue(), buildAirlockWAFConnectMappingVhost());
+        response = airlockWAFRestAPI.connectMappingVhost(cookie.getValue(), wafMapping.data.id, buildAirlockWAFConnectMappingVhost());
         System.out.println("connectMappingVhost: " + response.getStatus());
         response = airlockWAFRestAPI.saveConfiguration(cookie.getValue(), buildAirlockWAFSaveBean());
-        System.out.println("saveConfig " + response.getStatus());       
-        response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
+ //       System.out.println("saveConfig " + response.getStatus());       
+ //       response = airlockWAFRestAPI.terminateWAFSessions(cookie.getValue());
         System.out.println("terminateSession " + response.getStatus());
     }
 

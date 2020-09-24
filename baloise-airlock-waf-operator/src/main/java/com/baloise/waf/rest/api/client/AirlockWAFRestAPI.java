@@ -5,6 +5,8 @@ import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingBackend;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFConnectMappingVhost;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFMapping;
 import com.baloise.waf.rest.api.client.beans.AirlockWAFSave;
+import com.baloise.waf.rest.api.client.beans.mapping.WAFMapping;
+
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -49,7 +51,7 @@ public interface AirlockWAFRestAPI {
     @Consumes("application/json")
     @Produces("application/json")
     @Path("/configuration/mappings")
-    Response createMapping(
+    WAFMapping createMapping(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
         AirlockWAFMapping airlockWAFMapping);
 
@@ -64,19 +66,21 @@ public interface AirlockWAFRestAPI {
     @PATCH
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("/configuration/mappings/4/relationships/back-end-group")
+    @Path("/configuration/mappings/{mappingid}/relationships/back-end-group")
     //ToDo replace hardcoded mapping id with PathParam
     Response connectMappingBackend(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("mappingid") String mappingId,
         AirlockWAFConnectMappingBackend airlockWAFConnectMappingBackend);
     
     @PATCH
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("/configuration/mappings/4/relationships/virtual-hosts")
+    @Path("/configuration/mappings/{mappingid}/relationships/virtual-hosts")
     //ToDo replace hardcoded mapping id with PathParam
     Response connectMappingVhost(
         @CookieParam(WAF_SESSION_COOKIE_NAME) String wafSessionCookie,
+        @PathParam("mappingid") String mappingId,
         AirlockWAFConnectMappingVhost airlockWAFConnectMappingVhost);
         
 }
