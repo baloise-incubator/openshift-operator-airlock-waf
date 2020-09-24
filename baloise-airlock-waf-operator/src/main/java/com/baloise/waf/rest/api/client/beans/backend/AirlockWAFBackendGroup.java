@@ -2,7 +2,7 @@
 package com.baloise.waf.rest.api.client.beans.backend;
 
 
-public class AirlockWAFBackend {
+public class AirlockWAFBackendGroup {
 
     public Meta meta;
     public Data data;
