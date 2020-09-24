@@ -24,14 +24,15 @@ public class RouteRessourceWatcher implements Watcher<Route> {
 
     @Override
     public void eventReceived(Action action, Route route) {
-        log.debug(format("action: %s for route: %s", action.name(), route.getMetadata().getName()));
+        System.out.println(format("action: %s for route: %s", action.name(), route.getMetadata().getName()));
         if(this.isWafMappingOperatorEnabled(route)) {
-            log.info(format("%s - Route: %s", action.name(), route.getMetadata().getName()));
+            System.out.println(format("%s - Route: %s", action.name(), route.getMetadata().getName()));
         }
     }
 
     @Override
     public void onClose(KubernetesClientException e) {
+        System.out.println(format("Application exception: %s", e));
         log.error(format("Application exception: %s", e));
         Quarkus.asyncExit();
     }
