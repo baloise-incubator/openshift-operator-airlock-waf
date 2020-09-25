@@ -26,9 +26,15 @@ if (create|update) then
   endif
   :Map backend;
   :Map vHost;
-  -[#blue,dashed]-> sequence of
-  WAF REST API calls;
-  :Activate config;
+  if (approvalNeeded) then
+	:Save Config;
+  else
+	:Activate config;
+  endif
+    note left
+    WAF Admin 
+    manual activate config
+  end note
 else
   -[#black,dotted]->
   :Update existing mapping;
@@ -37,11 +43,13 @@ else
   else
     :Modify existing backend;
   endif
-  -[#blue,dashed]-> sequence of
-  WAF REST API calls;
-  :Save config;
-  note right
-    WAF Admin
+  if (approvalNeeded) then
+	:Save Config;
+  else
+	:Activate config;
+  endif
+  note left
+    WAF Admin 
     manual activate config
   end note
 endif
