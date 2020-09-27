@@ -7,7 +7,6 @@ create,update or delete waf mappings based on the events.
 * https://fabric8.io/guide/javaLibraries.html
 * https://github.com/fabric8io/kubernetes-client
 * https://github.com/fabric8io/kubernetes-client/blob/master/doc/CHEATSHEET.md
-* http://www.bouncycastle.org/java.html
 
 ## Todo
 At the moment we need a manuall added dependency to fabric8 openshift-client.
@@ -16,19 +15,12 @@ see https://github.com/quarkusio/quarkus/issues/3200
 -> Result - we could not build a native version of the application yet
 
 ## Docker Image
-### Base Docker Image
-To import the RedHat Base Image used by baloise-airlock-waf-operator into Baloise Quay manually use the following Steps:
-```
-$ docker pull registry.access.redhat.com/ubi8/ubi-minimal:8.2
-$ docker tag registry.access.redhat.com/ubi8/ubi-minimal:8.2 quay.balgroupit.com/kafka/ubi-minimal:8.2
-$ docker login quay.balgroupit.com -u b0xxxxxx
-$ docker push quay.balgroupit.com/kafka/ubi-minimal:8.2
 ```
 ### Local Build Docker Image
 If you add some COPY commands in Dockerfile don't forget to update `.dockerignore` !!
 ```
 ./mvnw clean package
-docker build -f src/main/docker/Dockerfile.jvm -t quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm .  
+docker build -f src/main/docker/Dockerfile.jvm -t devopsselfservice/airlock-waf-operator-jvm .  
 ```
 ### Local run Docker Image
 If you are using the fabric8 KubernetesClient from inside a Pod, it will load ~/.kube/config from the ServiceAccount volume mounted inside the Pod.
@@ -36,12 +28,12 @@ To be able to access the readiness and liveness probes urls from your docker hos
 To local run the Docker Container use the docker command below. 
 
 ```
-docker run --rm -ti -v c:/<local-path-to>/config:/.kube/config -p8080:8080 quay.balgroupit.com/quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm
+docker run --rm -ti -v <local-path-to>/config:/.kube/config -p8080:8080 devopsselfservice/airlock-waf-operator-jvm
 ```
 
 for example...
 ```
-docker run --rm -ti -v c:/Users/B041305/.kube/config:/.kube/config -p8080:8080 quay.balgroupit.com/devopsselfservice/baloise-airlock-waf-operator-jvm
+docker run --rm -ti -v ~/.kube/config:/.kube/config -p8080:8080 devopsselfservice/airlock-waf-operator-jvm
 ```
  
 The .kube/config file must be mounted manually in this case. 
