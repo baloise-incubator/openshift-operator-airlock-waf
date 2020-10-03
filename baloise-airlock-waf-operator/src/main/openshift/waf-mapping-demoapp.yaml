@@ -1,0 +1,13 @@
+apiVersion: "stable.baloise.ch/v1beta"
+kind: WafMapping
+metadata:
+  name: demoapp
+spec:
+  mappingName: "demoapp"
+  mappingEntryPath: "/demoapp"
+  mappingBackendPath: "/"
+  backendGroupName: "DemoAppBackendGroup"
+  backendName: "servername.for.demoapp.ch"
+  backendProtocol: "https"
+  backendPort: 443
+  vhostName: "thevhostname"

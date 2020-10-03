@@ -14,6 +14,112 @@ This is needed as long as quarkus not have a extension for the openshift-client.
 see https://github.com/quarkusio/quarkus/issues/3200
 -> Result - we could not build a native version of the application yet
 
+## CustomRessourceDefinition (CRD) for WAF Mappings
+https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/
+https://docs.openshift.com/container-platform/3.11/admin_guide/custom_resource_definitions.html
+
+```
+cd src/main/openshift/
+oc login -u system:<password>
+oc apply -f waf-mapping-resourcedefinition.yaml 
+oc apply -f waf-mapping-role-edit.yaml 
+oc new-project waf-mapping-operator-dev
+oc apply -f waf-mapping-operator-service-account.yaml 
+oc apply -f waf-mapping-operator-role-binding.yaml
+```
+
+Manage WafMapping Ressources
+Create
+```
+oc apply -f waf-mapping-demoapp.yaml 
+```
+Show
+```
+oc get wafmappings
+NAME      AGE
+demoapp   1m
+```
+Show Details for a wafmapping ressource
+```
+oc describe wafmapping/demoapp
+Name:         demoapp
+Namespace:    waf-mapping-operator-dev
+Labels:       <none>
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"stable.baloise.ch/v1beta","kind":"WafMapping","metadata":{"annotations":{},"name":"demoapp","namespace":"waf-mapping-operator-dev"},"spe...
+API Version:  stable.baloise.ch/v1beta
+Kind:         WafMapping
+Metadata:
+  Creation Timestamp:  2020-09-27T15:00:36Z
+  Generation:          1
+  Resource Version:    741864
+  Self Link:           /apis/stable.baloise.ch/v1beta/namespaces/waf-mapping-operator-dev/wafmappings/demoapp
+  UID:                 332eee82-00d2-11eb-8ec7-080027d36b38
+Spec:
+  Backend Group Name:    DemoAppBackendGroup
+  Backend Name:          servername.for.demoapp.ch
+  Backend Port:          443
+  Backend Protocol:      https
+  Mapping Backend Path:  /
+  Mapping Entry Path:    /demoapp
+  Mapping Name:          demoapp
+  Vhost Name:            thevhostname
+Events:                  <none>
+```
+
+Remove
+```
+oc delete wafmapping/demoapp 
+```
+
+## OpenShift Service Account
+
+Crate Service Account
+```
+oc apply -f waf-mapping-operator-service-account.yaml
+```
+Bind Service Account to Role
+```
+oc apply -f waf-mapping-operator-role-binding.yaml
+```
+Show Service Account 
+```
+oc describe serviceaccount/waf-mapping-operator-account
+Name:                waf-mapping-operator-account
+Namespace:           waf-mapping-operator-dev
+Labels:              app=baloise-airlock-waf-operator
+Annotations:         kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"ServiceAccount","metadata":{"annotations":{},"labels":{"app":"baloise-airlock-waf-operator"},"name":"waf-mapping-operator-ac...
+Image pull secrets:  waf-mapping-operator-account-dockercfg-5m82t
+Mountable secrets:   waf-mapping-operator-account-dockercfg-5m82t
+                     waf-mapping-operator-account-token-9cgtn
+Tokens:              waf-mapping-operator-account-token-9cgtn
+                     waf-mapping-operator-account-token-jv967
+Events:              <none>
+```
+Show Servcie Account Secret Token
+```
+oc describe secret waf-mapping-operator-account-token-jv967
+Name:         waf-mapping-operator-account-token-jv967
+Namespace:    waf-mapping-operator-dev
+Labels:       <none>
+Annotations:  kubernetes.io/created-by=openshift.io/create-dockercfg-secrets
+              kubernetes.io/service-account.name=waf-mapping-operator-account
+              kubernetes.io/service-account.uid=c92afde1-0157-11eb-8ec7-080027d36b38
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:          1070 bytes
+namespace:       24 bytes
+service-ca.crt:  2186 bytes
+token:           eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJ...
+```
+Login as Service Account using the Secret Token
+```
+oc login --token=eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJ...
+oc whoami
+```
+
 ## Docker Image
 ```
 ### Local Build Docker Image

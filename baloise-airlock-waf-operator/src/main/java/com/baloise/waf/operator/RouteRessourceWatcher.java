@@ -7,9 +7,7 @@ import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.openshift.api.model.Route;
 import io.quarkus.runtime.Quarkus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import org.jboss.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -20,7 +18,7 @@ import static java.lang.String.format;
 @ApplicationScoped
 public class RouteRessourceWatcher implements Watcher<Route> {
 
-    private final Logger log = LoggerFactory.getLogger(RouteRessourceWatcher.class);
+    private final Logger log = Logger.getLogger(RouteRessourceWatcher.class);
 
     @Inject
     KubernetesClient kubernetesClient;
@@ -68,7 +66,6 @@ public class RouteRessourceWatcher implements Watcher<Route> {
             log.error(format("route: %s exception:", route.getMetadata().getName()));
             log.error(e.toString());
         }
-
     }
 
     /**
