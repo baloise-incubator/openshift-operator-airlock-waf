@@ -19,17 +19,19 @@ For now we go with the second approach.
 
 [source,yaml]
 ----
-  metadata:
-    annotations:
-      baloise.com/waf-operator-enabled: "true|false"                        # <1>
-      baloise.com/waf-mapping-name: "<mapping-name>"                        # <2>
-      baloise.com/waf-mapping-entry-path: "<mapping-entry-path>"            # <3>
-      baloise.com/waf-mapping-backend-path: "<mapping-backend-path>"        # <4>
-      baloise.com/waf-backendgroup-name: "<backendgroup-name>"              # <5>
-      baloise.com/waf-backend-name: "<backend-name>"                        # <6>
-      baloise.com/waf-backend-protocol: "<backend-protocol: https>"         # <7>
-      baloise.com/waf-backend-port: "<backend-port: 443"                    # <8>
-      baloise.com/waf-vhost-name: "<vhost-name: 443"                        # <9>
+apiVersion: "stable.baloise.ch/v1beta"
+kind: WafMapping
+metadata:
+  name: demoapp
+spec:
+  mappingName: <mapping-name>                 #(1)
+  mappingEntryPath: <mapping-entry-path>      #(2)
+  mappingBackendPath: <mapping-backend-path>  #(3)
+  backendGroupName: <backendgroup-name>       #(4)
+  backendName: <backend-name>                 #(5)
+  backendProtocol: <backend-protocol>         #(6)
+  backendPort: <backend-port>                 #(7)
+  vhostName: <vhost-name>                     #(8)
 ----
 <1> 
 <2> 
@@ -38,23 +40,24 @@ For now we go with the second approach.
 <5> 
 <6> 
 <7> 
-<8> 
-<9> 
+<8>
 
 ### example
 [source,yaml]
 ----
-  metadata:
-    annotations:
-      baloise.com/waf-operator-enabled: "true"
-      baloise.com/waf-mapping-name: "echoserver"
-      baloise.com/waf-mapping-entry-path: "/"
-      baloise.com/waf-mapping-backend-path: "/"
-      baloise.com/waf-backendgroup-name: "echoserver-group"
-      baloise.com/waf-backend-name: "echoserver-test.demodomain.com"
-      baloise.com/waf-backend-protocol: "https"
-      baloise.com/waf-backend-port: "443"
-      baloise.com/waf-vhost-name: "CodeCamp WAF1"
+apiVersion: "stable.baloise.ch/v1beta"
+kind: WafMapping
+metadata:
+  name: demoapp
+spec:
+  mappingName: "demoapp"
+  mappingEntryPath: "/demoapp"
+  mappingBackendPath: "/"
+  backendGroupName: "DemoAppBackendGroup"
+  backendName: "servername.for.demoapp.ch"
+  backendProtocol: "https"
+  backendPort: 443
+  vhostName: "thevhostname"
 ----
 
 === https://docs.airlock.com/gateway/7.4/rest-api/config-rest-api.html[-> WAF Configuration REST API]
