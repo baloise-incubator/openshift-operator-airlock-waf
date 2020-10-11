@@ -7,12 +7,28 @@ create,update or delete waf mappings based on the events.
 * https://fabric8.io/guide/javaLibraries.html
 * https://github.com/fabric8io/kubernetes-client
 * https://github.com/fabric8io/kubernetes-client/blob/master/doc/CHEATSHEET.md
+* https://docs.airlock.com/gateway/7.4/rest-api/config-rest-api.html
+
+## Gerating java PoJos for Airlock WAF Rest API form example JSON files
+* https://github.com/joelittlejohn/jsonschema2pojo
+* https://github.com/joelittlejohn/jsonschema2pojo/wiki/Getting-Started
+* http://joelittlejohn.github.io/jsonschema2pojo/site/1.0.2/generate-mojo.html
+
+``./mvmw -P json2pojo-mapping jsonschema2pojo:generate``
+
+``./mvmw -P json2pojo-backend jsonschema2pojo:generate``
+
+``./mvmw -P json2pojo-vhost jsonschema2pojo:generate``
+
+PoJos will be generated below 
+
+``target/generated-sources/jsonschema2pojo``
+
+copy them below ``src/main/java/com/baloise/waf/rest/api/types`` after generation.
+This is done manual to be able to separate the PoJos for each api method in an own package.
 
 ## Todo
-At the moment we need a manuall added dependency to fabric8 openshift-client.
-This is needed as long as quarkus not have a extension for the openshift-client.
-see https://github.com/quarkusio/quarkus/issues/3200
--> Result - we could not build a native version of the application yet
+currently, log Output to stdout does not work.
 
 ## CustomRessourceDefinition (CRD) for WAF Mappings
 https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/

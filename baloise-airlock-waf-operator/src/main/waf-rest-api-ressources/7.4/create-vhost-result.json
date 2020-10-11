@@ -1,0 +1,70 @@
+{
+  "meta" : {
+    "type" : "jsonapi.metadata.document",
+    "timestamp" : "2020-06-23T13:00:06.508+02:00"
+  },
+  "data" : {
+    "type" : "virtual-host",
+    "id" : "5",
+    "attributes" : {
+      "name" : "myVirtualHost",
+      "tenant" : "AirlockBankingCo",
+      "hostName" : "myvirtualhost.example.com",
+      "aliasNames" : [ ],
+      "showMaintenancePage" : true,
+      "strictlyMatchFullyQualifiedDomainName" : false,
+      "keepAliveTimeout" : 3600,
+      "encodedSlashesAllowed" : true,
+      "downloadPdfsAsAttachmentsEnforced" : true,
+      "serverAdmin" : "admin@example.com",
+      "defaultRedirect" : "/",
+      "pathRedirects" : [ {
+        "from" : {
+          "pattern" : "/",
+          "caseIgnored" : true
+        },
+        "to" : "/redirect/path",
+        "redirectStatusCode" : "MOVED_PERMANENTLY"
+      } ],
+      "networkInterface" : {
+        "externalLogicalInterfaceName" : "EXT0",
+        "ipV4Address" : "87.239.214.12/24",
+        "ipV6Address" : "2001:500:2::c/64",
+        "http" : {
+          "enabled" : true,
+          "port" : 80,
+          "httpsRedirectEnforced" : false
+        },
+        "https" : {
+          "enabled" : false,
+          "port" : 443,
+          "http2Allowed" : false
+        }
+      },
+      "tls" : {
+        "lowStrengthCiphersAllowed" : true,
+        "ocspStaplingEnabled" : true,
+        "letsEncryptEnabled" : false,
+        "clientCertificateAuthentication" : "NOT_REQUIRED",
+        "chainVerificationDepth" : 1,
+        "ocspValidationEnforced" : true,
+        "caCertificatesForClientCertificateSelection" : [ ],
+        "caCertificatesForChainAndOcspValidation" : [ ]
+      },
+      "session" : {
+        "cookiePath" : "/",
+        "cookieDomain" : ""
+      },
+      "expertSettings" : {
+        "securityGate" : {
+          "enabled" : false,
+          "settings" : ""
+        },
+        "apache" : {
+          "enabled" : false,
+          "settings" : ""
+        }
+      }
+    }
+  }
+}

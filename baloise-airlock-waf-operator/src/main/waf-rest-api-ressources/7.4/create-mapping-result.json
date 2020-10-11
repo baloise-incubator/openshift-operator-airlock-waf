@@ -1,0 +1,548 @@
+{
+  "meta": {
+    "type": "jsonapi.metadata.document",
+    "timestamp": "2020-06-23T12:59:54.171+02:00"
+  },
+  "data": {
+    "type": "mapping",
+    "id": "5",
+    "attributes": {
+      "name": "mymapping",
+      "labels": [
+        "labelA",
+        "labelB"
+      ],
+      "tenant": "AirlockBankingCo",
+      "entryPath": {
+        "value": "/entryPathA/",
+        "regexFormatEnforced": true,
+        "ignoreCase": true,
+        "priority": 0
+      },
+      "backendPath": "/backendA/",
+      "threatHandling": "BLOCK",
+      "operationalMode": "PRODUCTION",
+      "enableMaintenancePage": true,
+      "access": {
+        "deniedUrl": {
+          "value": "/auth/login",
+          "mode": "GLOBAL"
+        },
+        "restrictions": [
+          {
+            "enabled": true,
+            "httpMethodPattern": {
+              "pattern": "[GET|POST|DELETE]",
+              "caseIgnored": true,
+              "inverted": true
+            },
+            "entryPathPattern": {
+              "pattern": "/admin/",
+              "caseIgnored": true,
+              "inverted": true
+            },
+            "authorizedRoles": [
+              "admin"
+            ],
+            "authorizedPlans": [
+              "android",
+              "ios",
+              "browser"
+            ]
+          }
+        ],
+        "clientCertificateAuthentication": "NOT_REQUIRED",
+        "authenticationFlow": "REDIRECT",
+        "backendLogoutUrl": "/backendA/logout",
+        "ntlmPassthroughEnabled": true,
+        "credentialsPropagation": {
+          "mandatory": true,
+          "type": "BASIC_AUTH"
+        },
+        "tokensEnabled": true,
+        "tokenTransport": {
+          "presenceMandatoryEnforced": true,
+          "headerExtraction": {
+            "enabled": true,
+            "extractionPattern": {
+              "pattern": "mypattern",
+              "caseIgnored": true
+            },
+            "replaceWith": "$1"
+          },
+          "parameterExtraction": {
+            "enabled": true,
+            "name": "paramExtraction"
+          },
+          "cookieExtraction": {
+            "enabled": true,
+            "name": "EXTRACTION_COOKIE"
+          }
+        },
+        "tokenVerification": {
+          "type": "JWS_JWE",
+          "jwsAlgorithm": "HS512",
+          "jwsKey": "HS_KEY",
+          "jweAlgorithm": "A128CBC_HS256",
+          "jweKey": "AES_KEY",
+          "expiryCheckEnabled": true,
+          "expiryCheckSkew": 42,
+          "extractTechnicalClientIdEnabled": true,
+          "extractTechnicalClientIdName": "TechnicalClientID",
+          "setAuditTokenFromSubjectEnabled": true,
+          "claimRestrictions": [
+            {
+              "enabled": true,
+              "name": "myrestriction",
+              "restrictionPattern": {
+                "pattern": "myRestriction",
+                "caseIgnored": true,
+                "inverted": true
+              }
+            }
+          ],
+          "roleExtractions": [
+            {
+              "enabled": true,
+              "name": "myextraction",
+              "extractionPattern": {
+                "pattern": "extractionPattern",
+                "caseIgnored": true
+              },
+              "replaceWith": "$1",
+              "tokenLifetimeAsRoleLifetimeEnforced": true
+            }
+          ]
+        }
+      },
+      "ipRules": {
+        "ipAddressWhitelists": {
+          "logOnly": true
+        },
+        "ipAddressBlacklists": {
+          "logOnly": true,
+          "webrootThreatCategories": ""
+        },
+        "dynamicIpAddressBlacklist": {
+          "enabled": true,
+          "countMode": "ALL"
+        }
+      },
+      "botManagement": {
+        "clientCookieSupportEnforced": true,
+        "wellKnownBots": {
+          "allowed": true,
+          "sourceDomainEnforced": true
+        },
+        "customBots": {
+          "allowed": true,
+          "sourceDomainEnforced": true,
+          "userAgentPattern": {
+            "pattern": "",
+            "caseIgnored": false,
+            "inverted": false
+          },
+          "domainPattern": {
+            "pattern": "",
+            "inverted": false
+          }
+        }
+      },
+      "timeouts": {
+        "backend": 120,
+        "sessionIdle": 0
+      },
+      "limits": {
+        "general": {
+          "maxRequestBodySize": 222,
+          "maxPathLength": 111
+        },
+        "http": {
+          "maxParameters": 2222,
+          "maxParameterNameLength": 1111,
+          "maxParameterValueLength": 3333
+        },
+        "json": {
+          "enabled": true,
+          "maxKeyLength": 48,
+          "maxValueLength": 42,
+          "maxNestingDepth": 2000,
+          "maxArrayItems": 1000,
+          "maxKeys": 4000,
+          "maxTotalEntries": 3000
+        }
+      },
+      "application": {
+        "sessionHandling": "ENFORCE_SESSION",
+        "controlApiAllowed": true,
+        "environmentCookiesEnabled": true,
+        "encryptedCookies": {
+          "enabled": true,
+          "prefix": "ENCRYPT.*"
+        },
+        "passthroughCookies": {
+          "enabled": true,
+          "prefix": "PASSTHROUGH.*"
+        },
+        "loadBalancingCookieEnabled": true,
+        "webSocketsAllowed": true,
+        "redirectForErrorPageEnabled": true,
+        "request": {
+          "charset": "UTF_8_FALLBACK_WINDOWS_1252"
+        },
+        "response": {
+          "compressionAllowed": true,
+          "stripCommentsEnabled": true,
+          "header": {
+            "location": {
+              "rewrites": [
+                {
+                  "enabled": true,
+                  "urlPattern": {
+                    "pattern": "/test/",
+                    "caseIgnored": true
+                  },
+                  "replaceWith": "$1"
+                }
+              ]
+            }
+          },
+          "body": {
+            "rewrites": [
+              {
+                "enabled": true,
+                "contentType": "application/json",
+                "contentPattern": {
+                  "pattern": "test",
+                  "caseIgnored": true
+                },
+                "replaceWith": "test2"
+              }
+            ]
+          },
+          "html": {
+            "rewrites": [
+              {
+                "enabled": true,
+                "urlPattern": {
+                  "pattern": "^https?://www.mydomain.com(/[^'\"]*)$",
+                  "caseIgnored": true
+                },
+                "uris": true,
+                "events": true,
+                "embedded": true,
+                "replaceWith": "$1"
+              }
+            ]
+          },
+          "errorPage": {
+            "rewrites": [
+              {
+                "enabled": true,
+                "statusContentPattern": "^5(?!02|03)..$",
+                "replaceWith": "500.html"
+              }
+            ]
+          }
+        }
+      },
+      "apiSecurity": {
+        "treatPathSegmentsAsParamValues": true,
+        "jsonParser": {
+          "enabled": true,
+          "contentTypePattern": {
+            "pattern": "application/json",
+            "caseIgnored": true,
+            "inverted": true
+          }
+        },
+        "openApiEnforced": true,
+        "logOnly": true,
+        "openApiPublishSpecificationEnabled": true,
+        "openApiPublishSpecificationPath": "path/to/apiSpecification.json",
+        "apiPolicyServiceEnabled": true,
+        "apiPolicyServiceId": 60,
+        "apiPolicyKeyExtractionHeader": {
+          "enabled": true,
+          "extractionPattern": {
+            "pattern": "^Api-Key: (.*)$",
+            "caseIgnored": false,
+            "inverted": false
+          },
+          "replaceWith": "$1"
+        },
+        "apiPolicyKeyExtractionQueryParameter": {
+          "enabled": true,
+          "parameterName": "api_key"
+        },
+        "apiPolicyKeyExtractionCookie": {
+          "enabled": true,
+          "cookieName": "ApiKey"
+        }
+      },
+      "dosAttackPrevention": {
+        "enabled": true,
+        "maxRequestsPerInterval": 500,
+        "interval": 60,
+        "whitelistIpPattern": {
+          "pattern": "^$",
+          "inverted": true
+        }
+      },
+      "requestBodyStreaming": {
+        "enabled": true,
+        "httpMethodPattern": {
+          "pattern": "^GET$",
+          "caseIgnored": true,
+          "inverted": false
+        },
+        "pathPattern": {
+          "pattern": "/path/",
+          "caseIgnored": false,
+          "inverted": false
+        },
+        "contentTypePattern": {
+          "pattern": "video/mpeg",
+          "caseIgnored": false,
+          "inverted": false
+        }
+      },
+      "httpParameterPollutionDetection": {
+        "mixedTypes": {
+          "enabled": false,
+          "logOnly": true,
+          "parameterNameExceptionPattern": {
+            "pattern": "",
+            "caseIgnored": true,
+            "inverted": true
+          }
+        },
+        "sameType": {
+          "enabled": false
+        }
+      },
+      "expertSettings": {
+        "securityGate": {
+          "enabled": false,
+          "settings": ""
+        },
+        "apache": {
+          "enabled": false,
+          "settings": ""
+        }
+      },
+      "locking": {
+        "enabled": true,
+        "labels": true,
+        "access": {
+          "deniedUrl": {
+            "value": true,
+            "mode": true
+          },
+          "restrictions": true,
+          "clientCertificateAuthentication": true,
+          "authenticationFlow": true,
+          "backendLogoutUrl": true,
+          "ntlmPassthroughEnabled": true,
+          "credentialsPropagation": {
+            "mandatory": true,
+            "type": true
+          },
+          "tokensEnabled": true,
+          "tokenVerification": {
+            "type": true,
+            "jwsAlgorithm": true,
+            "jwsKey": true,
+            "jweAlgorithm": true,
+            "jweKey": true,
+            "expiryCheckEnabled": true,
+            "expiryCheckSkew": true,
+            "claimRestrictions": true,
+            "roleExtractions": true,
+            "extractTechnicalClientIdEnabled": true,
+            "extractTechnicalClientIdName": true,
+            "setAuditTokenFromSubjectEnabled": true
+          },
+          "tokenTransport": {
+            "presenceMandatoryEnforced": true,
+            "headerExtraction": {
+              "enabled": true,
+              "extractionPattern": true,
+              "replaceWith": true
+            },
+            "parameterExtraction": {
+              "enabled": true,
+              "name": true
+            },
+            "cookieExtraction": {
+              "enabled": true,
+              "name": true
+            }
+          }
+        },
+        "entryPath": {
+          "settings": true,
+          "regexFormatEnforced": true,
+          "priority": true
+        },
+        "backendPath": true,
+        "threatHandling": true,
+        "operationalMode": true,
+        "enableMaintenancePage": true,
+        "ipRules": {
+          "ipAddressWhitelists": {
+            "logOnly": true
+          },
+          "ipAddressBlacklists": {
+            "logOnly": true
+          },
+          "dynamicIpAddressBlacklist": {
+            "enabled": true,
+            "countMode": true
+          }
+        },
+        "botManagement": {
+          "clientCookieSupportEnforced": true,
+          "wellKnownBots": {
+            "allowed": true,
+            "sourceDomainEnforced": true
+          },
+          "customBots": {
+            "allowed": true,
+            "sourceDomainEnforced": true,
+            "userAgentPattern": true,
+            "domainPattern": true
+          }
+        },
+        "timeouts": {
+          "backend": true,
+          "sessionIdle": true
+        },
+        "limits": {
+          "general": {
+            "maxRequestBodySize": true,
+            "maxPathLength": true
+          },
+          "http": {
+            "maxParameters": true,
+            "maxParameterNameLength": true,
+            "maxParameterValueLength": true
+          },
+          "json": {
+            "enabled": true,
+            "maxKeyLength": true,
+            "maxValueLength": true,
+            "maxNestingDepth": true,
+            "maxArrayItems": true,
+            "maxKeys": true,
+            "maxTotalEntries": true
+          }
+        },
+        "application": {
+          "sessionHandling": true,
+          "controlApiAllowed": true,
+          "environmentCookiesEnabled": true,
+          "encryptedCookies": {
+            "enabled": true,
+            "prefix": true
+          },
+          "passthroughCookies": {
+            "enabled": true,
+            "prefix": true
+          },
+          "loadBalancingCookieEnabled": true,
+          "webSocketsAllowed": true,
+          "redirectForErrorPageEnabled": true,
+          "request": {
+            "charset": true
+          },
+          "response": {
+            "compressionAllowed": true,
+            "stripCommentsEnabled": true,
+            "header": {
+              "location": {
+                "rewrites": true
+              }
+            },
+            "body": {
+              "rewrites": true
+            },
+            "html": {
+              "rewrites": true
+            },
+            "errorPage": {
+              "rewrites": true
+            }
+          }
+        },
+        "apiSecurity": {
+          "treatPathSegmentsAsParamValues": true,
+          "jsonParser": {
+            "enabled": true,
+            "contentTypePattern": true
+          },
+          "openApiEnforced": true,
+          "openApiDocumentId": true,
+          "logOnly": true,
+          "openApiPublishSpecificationEnabled": true,
+          "openApiPublishSpecificationPath": true,
+          "apiPolicyServiceEnabled": true,
+          "apiPolicyServiceId": true,
+          "apiPolicyKeyExtractionHeader": {
+            "enabled": true,
+            "extractionPattern": true,
+            "replaceWith": true
+          },
+          "apiPolicyKeyExtractionQueryParameter": {
+            "enabled": true,
+            "parameterName": true
+          },
+          "apiPolicyKeyExtractionCookie": {
+            "enabled": true,
+            "cookieName": true
+          }
+        },
+        "dosAttackPrevention": {
+          "enabled": true,
+          "maxRequestsPerInterval": true,
+          "interval": true,
+          "whitelistIpPattern": true
+        },
+        "requestBodyStreaming": {
+          "enabled": true,
+          "httpMethodPattern": true,
+          "pathPattern": true,
+          "contentTypePattern": true
+        },
+        "httpParameterPollutionDetection": {
+          "mixedTypes": {
+            "enabled": true,
+            "logOnly": true,
+            "parameterNameExceptionPattern": true
+          },
+          "sameType": {
+            "enabled": true
+          }
+        },
+        "icap": {
+          "request": {
+            "clientViews": true,
+            "backendViews": true
+          },
+          "response": {
+            "backendViews": true,
+            "clientViews": true
+          }
+        }
+      }
+    },
+    "relationships": {
+      "template": {
+        "data": {
+          "type": "mapping-template",
+          "id": "jwaxsKQ9IURXc/B+GE4KAZcjj2KmIofyWmX2OHF21Gw="
+        }
+      }
+    }
+  }
+}

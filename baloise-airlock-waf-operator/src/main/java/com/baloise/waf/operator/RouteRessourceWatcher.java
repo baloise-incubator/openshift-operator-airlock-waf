@@ -1,7 +1,7 @@
 package com.baloise.waf.operator;
 
-import com.baloise.waf.rest.api.client.AirlockWAFRestService;
-import com.baloise.waf.rest.api.client.beans.MappingDTO;
+import com.baloise.waf.rest.api.AirlockWAFRestService;
+import com.baloise.waf.rest.api.types.MappingDTO;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.Watcher;

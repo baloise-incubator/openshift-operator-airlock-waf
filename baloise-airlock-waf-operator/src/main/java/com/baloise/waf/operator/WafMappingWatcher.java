@@ -1,8 +1,8 @@
 package com.baloise.waf.operator;
 
 import com.baloise.waf.operator.crd.WafMapping;
-import com.baloise.waf.rest.api.client.AirlockWAFRestService;
-import com.baloise.waf.rest.api.client.beans.MappingDTO;
+import com.baloise.waf.rest.api.AirlockWAFRestService;
+import com.baloise.waf.rest.api.types.MappingDTO;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.Watcher;
 import io.quarkus.runtime.Quarkus;
@@ -10,8 +10,6 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-
-import java.util.Map;
 
 import static java.lang.String.format;
 

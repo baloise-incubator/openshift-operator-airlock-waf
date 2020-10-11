@@ -1,0 +1,71 @@
+{
+  "meta" : {
+    "type" : "jsonapi.metadata.document",
+    "timestamp" : "2020-06-23T13:00:40.392+02:00"
+  },
+  "data" : {
+    "type" : "back-end-group",
+    "id" : "5",
+    "attributes" : {
+      "name" : "mybackendgroup",
+      "tenant" : "AirlockBankingCo",
+      "backendHosts" : [ {
+        "protocol" : "HTTP",
+        "hostName" : "example.com",
+        "port" : 80,
+        "mode" : "ENABLED",
+        "spare" : false,
+        "weight" : 200
+      } ],
+      "inBandChecks" : {
+        "enabled" : true,
+        "statusPattern" : {
+          "enabled" : true,
+          "pattern" : ".*",
+          "inverted" : false
+        },
+        "checkResponseContentEnabled" : true,
+        "contentTypePattern" : {
+          "pattern" : ".*",
+          "inverted" : false
+        },
+        "maxContentSize" : 100,
+        "contentPattern" : {
+          "pattern" : ".*",
+          "caseIgnored" : false,
+          "inverted" : false
+        }
+      },
+      "outOfBandChecks" : {
+        "enabled" : true,
+        "url" : "http://example.com/state",
+        "checksWhenGood" : {
+          "interval" : 10,
+          "switchAfter" : 20
+        },
+        "checksWhenBad" : {
+          "interval" : 10,
+          "switchAfter" : 20
+        },
+        "timeout" : 200,
+        "statusPattern" : {
+          "enabled" : true,
+          "pattern" : ".*",
+          "inverted" : false
+        },
+        "contentPattern" : {
+          "enabled" : true,
+          "pattern" : ".*",
+          "caseIgnored" : false,
+          "inverted" : false
+        }
+      },
+      "expertSettings" : {
+        "securityGate" : {
+          "enabled" : false,
+          "settings" : ""
+        }
+      }
+    }
+  }
+}
