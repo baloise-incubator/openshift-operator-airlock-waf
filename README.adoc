@@ -110,6 +110,7 @@ champion: build our own (lightweight) solution based on Quarkus and the Fabric8 
 | potentially more lightweight
 
 exactly what we need
+
 support waf mappings for applications inside and outside of OpenShift
 
 | offset to manufacturer (API) changes
